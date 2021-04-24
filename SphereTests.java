@@ -1,5 +1,5 @@
 /**
- * 
+ *SHIRA CRAMMER 
  */
 package unittests;
 
@@ -15,7 +15,7 @@ import Primitives.Vector;
 import geometries.Sphere;
 
 /**
- * @author îñàñ
+ * @author Ã®Ã±Ã Ã±
  *
  */
 public class SphereTests 
