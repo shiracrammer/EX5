@@ -13,7 +13,7 @@ import Primitives.*;
 
 /**
  * Testing Polygons
- * @author Dan
+ * @author SHIRA
  *
  */
 public class PolygonTests {
