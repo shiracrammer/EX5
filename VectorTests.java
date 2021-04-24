@@ -1,5 +1,5 @@
 /**
- * 
+ * SHIRA CRAMMER
  */
 package unittests;
 
@@ -12,7 +12,7 @@ import Primitives.Vector;
 import Primitives.util;
 
 /**
- * @author îñàñ
+ * @author Ã®Ã±Ã Ã±
  *
  */
 public class VectorTests {
