@@ -1,5 +1,5 @@
 package geometries;
-
+import Primitives.Color;
 import java.util.ArrayList;
 import java.util.List;
 import Primitives.*;
@@ -9,9 +9,9 @@ import static Primitives.util.*;
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
  * 
- * @author SHIRA
+ * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -79,18 +79,37 @@ public class Polygon implements Geometry {
             edge2 = vertices[i].substract(vertices[i - 1]);
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
+          
         }
     }
-
+    /*
+     * constructor with color and list of vertices
+     */
+public Polygon(Color color,Point3D... vertices) throws Exception
+{
+	this(vertices);
+	_emmission=new Color(color.getColor());
+}
+/*
+ * constructor with material, color and list of vertices
+ */
+public Polygon(Material material, Color color,Point3D... vertices) throws Exception
+{
+	this(color, vertices);
+	_material=material;
+}
     @Override
     public Vector getNormal(Point3D point) throws Exception {
         return _plane.get_normal().normalize();
     }
 
 	@Override
-	public List<Point3D> findIntsersections(Ray ray) throws Exception
+	public List<GeoPoint> findIntsersections(Ray ray) throws Exception
 	{
-		List<Point3D> result= _plane.findIntsersections(ray);
+		
+		List<GeoPoint> result= _plane.findIntsersections(ray);
+		   if (result == null)
+	            return null;
 		List<Vector> v =new ArrayList<>() ;
 		List<Vector> n = new ArrayList<>() ;
         boolean flag;
@@ -111,9 +130,12 @@ public class Polygon implements Geometry {
 		{
 			  i++;
 		}
-		if(i==n.size())
-			return result;
-		return null;
+		if(i!=n.size())
+			return null;
+		 List<GeoPoint> result1 = new ArrayList<>();
+        for (GeoPoint geo : result) 
+            result1.add(new GeoPoint(this, geo.point));
+        return result1;
 	}
 }
 
