@@ -1,19 +1,37 @@
 package geometries;
 
 import java.util.List;
-
+import Primitives.Color;
+import Primitives.Material;
 import Primitives.Point3D;
-
 import Primitives.Ray;
 import Primitives.Vector;
 import Primitives.util;
 public class Tube extends RadialGeometry {
 	Ray _axisRay;
-
+	/*
+	 * constructor with radius and ray
+	 */
 	public Tube(double r,Ray ray) 
 	{
 		super(r);
 		_axisRay=ray;
+	}
+	/*
+	 * constructor with color, radius and ray
+	 */
+	public Tube(Color color,double r,Ray ray)
+	{
+		this(r,ray);
+		_emmission=color;
+	}
+	/*
+	 * constructor with material, color, radius and ray
+	 */
+	public Tube(Material material,Color color,double r,Ray ray)
+	{
+		this(color, r, ray);
+		_material=material;
 	}
 
 	@Override
@@ -37,7 +55,7 @@ public class Tube extends RadialGeometry {
 	}
 
 	@Override
-	public List<Point3D> findIntsersections(Ray ray) {
+	public List<GeoPoint> findIntsersections(Ray ray) {
 		// TODO Auto-generated method stub
 		return null;
 	}
