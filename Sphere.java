@@ -1,23 +1,42 @@
 package geometries;
-
+import Primitives.Color;
+import Primitives.Material;
 import Primitives.Point3D;
 import Primitives.Ray;
 import Primitives.Vector;
 import Primitives.util;
-
 import java.util.List;
-public class Sphere extends RadialGeometry {
+public class Sphere extends RadialGeometry 
+{
 Point3D _center;
 	
 	
-
+/*
+ * constructor with center point and radius
+ */
 	public Sphere(Point3D center, double r)
 	{
 		// TODO Auto-generated constructor stub
 		super(r);
 		_center=center;
 	}
-
+	
+	/*
+	 * constructor with color, center point and radius
+	 */
+	public Sphere(Color color,Point3D center, double r) 
+	{ 
+		this(center,r);
+		_emmission=color;
+	}
+	/*
+	 * constructor with material, color, center point and radius
+	 */
+	public Sphere(Material material,Color color,Point3D center, double r) 
+	{ 
+		this(color,center, r);
+		_material=material;
+	}
 
 
 	public Point3D get_center() {
@@ -43,7 +62,7 @@ Point3D _center;
 
 	@Override
 
-	public List<Point3D> findIntsersections(Ray ray) throws Exception
+	public List<GeoPoint> findIntsersections(Ray ray) throws Exception
 	{
 		Point3D p0=ray.getPoint();
 		Vector v=ray.getDirection();
@@ -51,11 +70,10 @@ Point3D _center;
 		try
 		{
 			u=_center.substract(p0);
-			//u=new Vector(p0.substract(_center));
 		}
 		catch(IllegalArgumentException ex)
 		{
-			return List.of(ray.getPoint(_radius));
+			return List.of(new GeoPoint(this,ray.getPoint(_radius)));
 		}
 		double tm=util.alignZero(v.dotProduct(u));
 		double dSquared;
@@ -80,11 +98,11 @@ Point3D _center;
         if(t1<=0&&t2<=0)
         	return null;
         if(t1>0&&t2>0)
-        	return List.of(ray.getPoint(t1),ray.getPoint(t2));
+        	return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
         if(t1>0)
-        	return List.of(ray.getPoint(t1));
+        	return List.of(new GeoPoint(this,ray.getPoint(t1)));
         else
-        	return List.of(ray.getPoint(t2));
+        	return List.of(new GeoPoint(this,ray.getPoint(t2)));
 		}
 	
 
