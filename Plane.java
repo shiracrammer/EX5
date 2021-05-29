@@ -5,24 +5,45 @@ import java.util.List;
 import Primitives.Point3D;
 import Primitives.Ray;
 import Primitives.Vector;
-
-public class Plane implements Geometry
+import Primitives.Color;
+import Primitives.Material;;
+public class Plane extends Geometry
 {
 Point3D _p;
 Vector _normal;
 @Override
-public Vector getNormal(Point3D point) {
+public  Vector getNormal(Point3D point) {
 	return _normal;
 }
-
+/*
+ * constructor with 3 points
+ */
 public Plane(Point3D p1, Point3D p2, Point3D p3) throws Exception
 {
-
    Vector U = new Vector (p2.substract(p1));
    Vector V = new Vector (p3.substract(p1));
    Vector N = U.crossProduct(V);
     _normal=N;
 	_p=p1;
+}
+/*
+ * constructor with color and 3 points
+ */
+public Plane(Color color,Point3D p1, Point3D p2, Point3D p3) throws Exception
+{
+
+	this(p1,p2,p3);
+	_emmission=color;
+	
+}
+/*
+ * constructor with material, color and 3 points
+ */
+public Plane(Material material, Color color,Point3D p1, Point3D p2, Point3D p3) throws Exception
+{
+this(color, p1, p2, p3);
+_material=material;
+
 }
 public Plane(Point3D p, Vector normal)
 {
@@ -48,14 +69,14 @@ public String toString() {
 }
  
 @Override
-public List<Point3D> findIntsersections(Ray ray) throws Exception 
+public List<GeoPoint> findIntsersections(Ray ray) throws Exception 
 {
 	Vector v;
 	double mone;
-	Point3D p1=new Point3D(ray.getPoint());
+	GeoPoint p1=new GeoPoint(this, ray.getPoint());
 	try
 	{
-	    v=new Vector(_p.substract(p1));
+	    v=new Vector(_p.substract(p1.point));
 	}
 	catch(IllegalArgumentException e)
 	{
@@ -70,7 +91,7 @@ public List<Point3D> findIntsersections(Ray ray) throws Exception
 	double t=mone/mechane;
 	if(t<=0)
 		return null;
-	return List.of(ray.getPoint(t));
+	return List.of(new GeoPoint(this,ray.getPoint(t)));
 	
 }
 
