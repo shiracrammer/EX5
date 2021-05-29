@@ -11,7 +11,7 @@ import scene.Scene;
 /**
  * Testing basic shadows
  * 
- * @author Dan
+ * 
  */
 public class ShadowTests {
 
