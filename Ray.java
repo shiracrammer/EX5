@@ -5,6 +5,10 @@ public class Ray
 Point3D point;
 Vector direction;
 
+/*
+ * floating character
+ */
+private static final double DELTA = 0.1;
 public Ray(Ray other)
 {
 	
@@ -14,9 +18,18 @@ public Ray(Ray other)
 
 public Ray(Point3D point1, Vector direct)
 {
-	
 	point=point1;
 	direction=direct;
+}
+
+public Ray(Point3D point1, Vector direct,Vector normal) throws Exception
+{
+double sign=direct.dotProduct(normal);
+if(sign>0)
+	point=point1.add(normal.scale(DELTA));
+else
+	point=point1.add(normal.scale(-DELTA));
+direction=direct;
 }
 
 public Point3D getPoint() 
@@ -49,7 +62,8 @@ public  Point3D getPoint(double t) throws Exception
 {
 	if(util.isZero(t))
 		return point;
-	Point3D p=new Point3D(point.add(direction.scale(t)));
+	Vector d=new Vector(direction.scale(t));
+	Point3D p=new Point3D(point.add(d));
 	return p;
 }
 
