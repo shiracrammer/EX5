@@ -6,7 +6,7 @@ import static Primitives.util.*;
  * Class Coordinate is the basic class representing a coordinate for Cartesian
  * coordinate system. The class is based on Util controlling the accuracy.
  * 
- * @author SHIRA CRAMMER
+ * @author Dan Zilberstein
  */
 public final class coordinate {
     /**
